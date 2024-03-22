@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 
 const app = express();
 
@@ -9,5 +9,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Server Is running on Port :http://localhost:"+PORT);
+  console.log("Server Is running on Port :http://localhost:" + PORT);
 });
