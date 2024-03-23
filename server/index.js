@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload"; // use for upload file from file manager
 import cloudinary from "cloudinary";
 import messageRouter from "./router/messageRouter.js";
+import userRouter from './router/userRouter.js'
 import { errorMiddleware } from '../server/middleware/errorMiddleware.js'
 
 const app = express();
@@ -41,6 +42,7 @@ connectToDb(); // connect database
 
 // routes use
 app.use("/api/v1/message", messageRouter);
+app.use("/api/v1/user",userRouter);
 
 app.get("/", (req, res) => {
   res.send("Server is running...!");
