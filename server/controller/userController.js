@@ -23,3 +23,45 @@ export const patientRegister = catchAsyncError(async(req,res,next)=>{
         message :"Patient | User registration successfull"
        })
 })
+
+export const loginPatient = catchAsyncError(async(req,res,next)=>{
+    const {email,password,confirmPassword,role} = req.body;
+
+    if(!email || !password || !confirmPassword || !role){
+        return next(new ErrorHandler("Please enter all fields",400))
+    }
+
+    if(password !== confirmPassword){
+        return next(new ErrorHandler("Password does not match please check",400))
+    }
+
+    const user = await User.findOne({email}).select("+password");
+    // console.log(user)
+    if(!user){
+        return next(new ErrorHandler("Invalid email id ",400));
+    }
+
+    const isPasswordMatch = await user.comparePassword(confirmPassword);
+    if(!isPasswordMatch){
+        return next(new ErrorHandler("Password does not match please check",400))
+    }
+
+    if(role !== user.role){
+        return next(new ErrorHandler("User with this role not found ",400))
+    }
+
+    const token = await user.generateJsonWebToken()
+
+    // console.log(token)
+   
+
+    res.status(200).json({
+        success:true,
+        message:"Login Successfull!",
+        token:token
+    })
+    
+
+     
+
+})
