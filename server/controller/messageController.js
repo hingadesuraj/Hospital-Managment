@@ -6,6 +6,7 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
   const { firstName, lastName, email, phone, message } = req.body;
 
   if (!firstName || !lastName || !email || !phone || !message) {
+    // use error handler class here to pass error 
     return next( new ErrorHandler("Please Fill Full Form!",400))
   }
 
