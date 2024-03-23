@@ -10,6 +10,12 @@ export const patientRegister = catchAsyncError(async(req,res,next)=>{
             return next(new ErrorHandler("Please Fill all fields ",400))
         }
 
+        const isExist = await User.findOne({email});
+
+        if(isExist){
+            return next(new ErrorHandler("User already exist, plese use other email address",400))
+        }
+
        await User.create({firstName,lastName,email,phone,nic,dob,gender,password,role,doctorDepartment,docAvatoar})
 
        res.status(200).json({
