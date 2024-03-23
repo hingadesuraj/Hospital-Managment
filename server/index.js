@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload"; // use for upload file from file manager
 import cloudinary from "cloudinary";
 import messageRouter from "./router/messageRouter.js";
+import { errorMiddleware } from '../server/middleware/errorMiddleware.js'
 
 const app = express();
 config({ path: "./config/config.env" }); // setup dotenv file
@@ -46,6 +47,8 @@ app.get("/", (req, res) => {
 });
 
 
+
+app.use(errorMiddleware);
 
 
 app.listen(process.env.PORT, () => {
