@@ -70,14 +70,15 @@ const userSchema = new mongoose.Schema({
   })
   
 //   password compare
+// compare password from database and user enter in login page
 userSchema.methods.comparePassword = async function(enteredPassword){
     return await bcrypt.compare(enteredPassword,this.password)
 }
 
 // user login generate token
-
 userSchema.methods.generateJsonWebToken = async function(){
     return jwt.sign({id:this._id},process.env.JWT_SECRET_KEY,{
+      // jwt token expire in 7 days 
         expiresIn:process.env.JWT_EXPIRES
     })
 }
